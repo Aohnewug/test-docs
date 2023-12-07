@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "AIMS"
-copyright = "2023, Wenhao Gu"
+copyright = "2023, Genegeniedx"
 author = "Wenhao Gu"
 release = "1.1.6"
 
