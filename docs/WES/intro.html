@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      <title>Whole Exome Sequencing</title>
+    
+          <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=b108bffd"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../_static/theme-vendors.js"></script> -->
+      <script src="../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../genindex.html" />
+  <link rel="search" title="Search" href="../search.html" />
+  <link rel="prev" title="AutoML" href="../AutoML/intro.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../index.html" class="home-link">
+    
+      <span class="site-name">AIMS</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../index.html#welcome-to-aims-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="current">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../AutoML/intro.html" class="reference internal ">AutoML</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 current">
+            
+              <a href="#" class="reference internal current">Whole Exome Sequencing</a>
+            
+
+            
+              <ul>
+                
+                  <li class="toctree-l2"><a href="#introduction" class="reference internal">Introduction</a></li>
+                
+                  <li class="toctree-l2"><a href="#pipeline-overview" class="reference internal">Pipeline Overview</a></li>
+                
+                  <li class="toctree-l2"><a href="#pipeline-workflow" class="reference internal">Pipeline workflow</a></li>
+                
+                  <li class="toctree-l2"><a href="#validation" class="reference internal">Validation</a></li>
+                
+                  <li class="toctree-l2"><a href="#version-update-history" class="reference internal">Version update history</a></li>
+                
+              </ul>
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+    <li>Whole Exome Sequencing</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="../AutoML/intro.html"
+       title="previous chapter">← AutoML</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="whole-exome-sequencing">
+<h1>Whole Exome Sequencing<a class="headerlink" href="#whole-exome-sequencing" title="Permalink to this heading">¶</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
+<p>The AIMS DNA-Seq analysis pipeline identifies somatic variants within whole genome sequencing (WGS) and whole exome sequencing (WES) data.</p>
+<p>WGS involves sequencing the entire genome, including coding and non-coding regions. WGS offers a comprehensive view of an individual’s genomic landscape, capturing variations in protein coding, regulatory, intronic, and intergenic regions. WGS is particularly useful for understanding complex genetic traits, population genetics, and uncovering structural variants.</p>
+<p>WES specifically targets the exome, which represents only the protein-coding regions of the genome. While the exome constitutes only a small fraction of the entire genome, it contains the majority of known disease-causing mutations. WES is valuable for investigating genetic characteristics of diseases in exonic regions with much lower cost compared to WGS.</p>
+<p>AIMS DNA-Seq pipeline detects variants on WGS or WES data. It compares allele frequencies in normal and tumor sample alignments, annotating each mutation, and aggregating mutations from multiple callers.</p>
+</section>
+<section id="pipeline-overview">
+<h2>Pipeline Overview<a class="headerlink" href="#pipeline-overview" title="Permalink to this heading">¶</a></h2>
+<section id="workflow">
+<h3>workflow<a class="headerlink" href="#workflow" title="Permalink to this heading">¶</a></h3>
+<p>The AIMS WES pipeline consists of the following main steps:
+* Preprocessing
+* Genome Alignment
+* Quality Score Recalibration Improving the accuracy of variant calls
+* Variant Calling
+* Variant Filtration and Annotation
+* Mutation Aggregation
+* Downstream Statistics calculation</p>
+</section>
+<section id="input-data">
+<h3>Input data<a class="headerlink" href="#input-data" title="Permalink to this heading">¶</a></h3>
+<p>AIMS WES pipeline accommodates two types of input data, the raw sequencing data in FASTQ format, or aligned reads information in BAM format. If a BAM file is provided, the pipeline will automatically bypass the preprocessing and genome alignment steps.</p>
+</section>
+<section id="tools-and-software">
+<h3>Tools and Software<a class="headerlink" href="#tools-and-software" title="Permalink to this heading">¶</a></h3>
+<p>The pipeline relies on the following bioinformatics tools and internal scripts for the entire analysis process:</p>
+<ul class="simple">
+<li><p>BWA (version, link) for reads mapping</p></li>
+<li><p>GATK (version, link) for variant preprocessing and variant calling</p></li>
+<li><p>HaplotypeCaller (GATK) for germline variant calling</p></li>
+<li><p>Mutect2 (GATK) for somatic variant calling</p></li>
+<li><p>Strelka2 (GATK) for somatic variant calling</p></li>
+<li><p>VEP (version, link) for variant annotation</p></li>
+<li><p>Perl scripts for variant aggregation and somatic mutation masking</p></li>
+<li><p>Python scripts for Tumor Mutation Burden (TMB)</p></li>
+<li><p>MSIsensor2 for Microsatellite Instability (MSI) calculation.</p></li>
+<li><p>MANTIS for MSI calculation</p></li>
+</ul>
+</section>
+<section id="configuration">
+<h3>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading">¶</a></h3>
+<p>AIMS WES pipeline provides the following configuration for users to control the variant calling process.
+* Version
+* Data type
+* Downsample
+* Caller</p>
+</section>
+<section id="output">
+<h3>Output<a class="headerlink" href="#output" title="Permalink to this heading">¶</a></h3>
+<p>The outputs of the AIMS WES pipeline comprise sample level 1) quality control assessment result, 2) variant call results (VCF) for each selected variant caller, 3) aggregated masked somatic mutation annotation file (MAF), and dataset-level 4) sample-by-gene mutation feature matrix.</p>
+</section>
+</section>
+<section id="pipeline-workflow">
+<h2>Pipeline workflow<a class="headerlink" href="#pipeline-workflow" title="Permalink to this heading">¶</a></h2>
+<section id="pre-alignment-processing">
+<h3>Pre-alignment processing<a class="headerlink" href="#pre-alignment-processing" title="Permalink to this heading">¶</a></h3>
+<p>Raw sequencing reads undergo quality control using FastQC to assess read quality, identify adapter contamination, and evaluate other sequencing metrics.
+* Command Line
+<code class="docutils literal notranslate"><span class="pre">`FastQC</span> <span class="pre">&lt;fastq_1.fq.gz&gt;</span> <span class="pre">&lt;fastq_2.fq.gz&gt;`</span></code></p>
+</section>
+<section id="alignment">
+<h3>Alignment<a class="headerlink" href="#alignment" title="Permalink to this heading">¶</a></h3>
+<p>Align reads to the reference genome. Supported reference genomes include Human (hg38), Mouse (mm39), Fruit fly (dm6), SARS-CoV-2.
+* Command Line
+<code class="docutils literal notranslate"><span class="pre">`Bwa</span> <span class="pre">mem</span> <span class="pre">&lt;reference&gt;</span> <span class="pre">&lt;fastq_1.fq.gz&gt;</span> <span class="pre">&lt;fastq_2.fq.gz&gt;`</span></code></p>
+</section>
+<section id="id1">
+<h3>Pre-alignment processing<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<section id="subsampling">
+<h4>Subsampling<a class="headerlink" href="#subsampling" title="Permalink to this heading">¶</a></h4>
+</section>
+<section id="base-quality-score-recalibration">
+<h4>Base (Quality Score) Recalibration<a class="headerlink" href="#base-quality-score-recalibration" title="Permalink to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>GATK BaseRecalibrator</p></li>
+<li><p>GATK ApplyBQSR</p></li>
+</ul>
+</section>
+<section id="quality-control">
+<h4>Quality control<a class="headerlink" href="#quality-control" title="Permalink to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>samtools stats</p></li>
+<li><p>Qualimap bamqc</p></li>
+</ul>
+</section>
+<section id="pipeline-run-summary">
+<h4>Pipeline run summary<a class="headerlink" href="#pipeline-run-summary" title="Permalink to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>MultiQC</p></li>
+</ul>
+</section>
+</section>
+<section id="variant-calling">
+<h3>Variant calling<a class="headerlink" href="#variant-calling" title="Permalink to this heading">¶</a></h3>
+<p>There are many different variant calling tools, each has strengths and weaknesses, and their performance can vary based on factors such as sequencing technology, read depth, and the type of variants being analyzed. There is currently no scientific consensus on the best variant calling pipeline. AIMS includes three variant calling tools, users can choose the pipeline(s) most appropriate for the data.</p>
+<section id="germline-variant-calling">
+<h4>Germline variant calling<a class="headerlink" href="#germline-variant-calling" title="Permalink to this heading">¶</a></h4>
+<p>Germline variant calling involves identifying genetic variations present in the germline cells of an individual, which are inherited from their parents and are present in every cell of the body. AIMS call germline variant using HaplotypeCaller and Strelka2.
+* Command Line
+<code class="docutils literal notranslate"><span class="pre">`HaplotypeCaller</span> <span class="pre">&lt;bam&gt;`</span></code>
+<code class="docutils literal notranslate"><span class="pre">`Strelka2</span> <span class="pre">&lt;bam&gt;`</span></code></p>
+</section>
+<section id="somatic-variant-calling">
+<h4>Somatic variant calling<a class="headerlink" href="#somatic-variant-calling" title="Permalink to this heading">¶</a></h4>
+<p>A somatic mutation is a genetic alteration that occurs in the non-reproductive cells (somatic cells) of an organism. Unlike germline mutations, which are inherited and present in every cell of an individual’s body, somatic mutations arise during an individual’s lifetime and are specific to certain cells or tissues. Somatic variant calling is to detect alterations in tumor samples compared to matched normal tissue samples.. AIMS call somatic mutation using Mutect2 and Strelka2
+* Command Line
+<code class="docutils literal notranslate"><span class="pre">`Mutect2</span> <span class="pre">&lt;normal_bam&gt;</span> <span class="pre">&lt;tumor_bam&gt;`</span></code>
+<code class="docutils literal notranslate"><span class="pre">`Strelka2</span> <span class="pre">&lt;normal_bam&gt;</span> <span class="pre">&lt;tumor_bam&gt;`</span></code></p>
+</section>
+</section>
+<section id="variant-filtration-and-annotation">
+<h3>Variant filtration and annotation<a class="headerlink" href="#variant-filtration-and-annotation" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="tumor-mutation-burden-estimation">
+<h3>Tumor mutation burden estimation<a class="headerlink" href="#tumor-mutation-burden-estimation" title="Permalink to this heading">¶</a></h3>
+<p>Tumor Mutation Burden (TMB) is a measure of the total number of mutations present in the genomic DNA of a tumor cell. It quantifies the extent of genetic alterations within a tumor and is often expressed as the number of mutations per sample. AIMS call internal script to calculate the TMB of a sample.</p>
+</section>
+<section id="microsatellite-instability-detection">
+<h3>Microsatellite instability detection<a class="headerlink" href="#microsatellite-instability-detection" title="Permalink to this heading">¶</a></h3>
+<p>Microsatellite instability (MSI) refers to the condition where the number of short tandem repeats, known as microsatellites, in the DNA of a cell differs from what is considered normal.</p>
+</section>
+</section>
+<section id="validation">
+<h2>Validation<a class="headerlink" href="#validation" title="Permalink to this heading">¶</a></h2>
+<section id="germline-variant-calling-validation">
+<h3>Germline variant calling validation<a class="headerlink" href="#germline-variant-calling-validation" title="Permalink to this heading">¶</a></h3>
+<p>Report given</p>
+</section>
+<section id="somatic-variant-calling-validation">
+<h3>Somatic variant calling validation<a class="headerlink" href="#somatic-variant-calling-validation" title="Permalink to this heading">¶</a></h3>
+<p>Report given</p>
+</section>
+<section id="tmb-calculation-validation">
+<h3>TMB calculation validation<a class="headerlink" href="#tmb-calculation-validation" title="Permalink to this heading">¶</a></h3>
+<p>Report given</p>
+</section>
+<section id="msi-calculation-validation">
+<h3>MSI calculation validation<a class="headerlink" href="#msi-calculation-validation" title="Permalink to this heading">¶</a></h3>
+<p>Report given</p>
+</section>
+</section>
+<section id="version-update-history">
+<h2>Version update history<a class="headerlink" href="#version-update-history" title="Permalink to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="../AutoML/intro.html"
+       title="previous chapter">← AutoML</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2023, Genegeniedx.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.1.2 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>
